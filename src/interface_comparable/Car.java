@@ -1,15 +1,49 @@
 package interface_comparable;
 
-public class Car implements Comparable { //<Car>{
-    int speed;
-    int price;
-    String model;
-    String color;
+import java.util.Comparator;
 
-    Car(int speed, int price, String model, String color) {
+public class Car implements Comparable<Car> {
+    private int speed;
+    private int price;
+    private String model;
+    private String color;
+
+    public Car(int speed, int price, String model, String color) {
         this.speed = speed;
         this.price = price;
         this.model = model;
+        this.color = color;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -17,24 +51,12 @@ public class Car implements Comparable { //<Car>{
         return this.speed + " " + this.price + " " + this.model + " " + this.color;
     }
 
-    // Сортируем по скорости/цене
-    public int compareTo(Object o) {    // public int compareTo(Car o) {
-        int temp = this.speed - ((Car)o).speed;   // int temp = this.speed - o.speed;
-        if (temp == 0) {
-            int tempPrice = this.price - ((Car)o).price;
-            if (tempPrice == 0) {
-                int tempModel = this.model.compareTo(((Car)o).model);
-                if (tempModel == 0) {
-                    return this.color.compareTo(((Car)o).color);
-                }
-                else return tempModel;
-            }
-            else return this.price - ((Car)o).price;
-        } else {
-            return temp;
-        }
+    @Override
+    public int compareTo(Car o) {
+        return Comparator.comparing(Car::getSpeed)
+                .thenComparing(Car::getPrice)
+                .thenComparing(Car::getModel)
+                .thenComparing(Car::getColor)
+                .compare(this, o);
     }
-
-    // Сравнение 2-х строковых значений
-    // return this.model.compareTo((Car)o).model);
 }
