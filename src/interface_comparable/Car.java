@@ -15,6 +15,9 @@ public class Car implements Comparable<Car> {
         this.color = color;
     }
 
+    public Car() {
+    }
+
     public int getSpeed() {
         return speed;
     }
